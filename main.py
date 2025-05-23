@@ -1,3 +1,4 @@
+# --- Block 1 Start ---
 # Don't Remove Credit Tg - @Tushar0125
 # Ask Doubt on telegram @Tushar0125
 
@@ -66,8 +67,8 @@ AUTH_CHANNEL = -1002572301679 # This usually implies a channel ID, ensure it's c
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__) # Use a logger instance
-
-
+# --- Block 1 End ---
+# --- Block 2 Start ---
 # --- Utility Functions ---
 
 async def show_random_emojis(message):
@@ -123,7 +124,8 @@ def save_to_file(videos, name):
             else:
                 file.write(f"{title}: {url}\n")
     return filename
-
+# --- Block 2 End ---
+# --- Block 3 Start ---
 # --- Pyrogram Bot Client Initialization ---
 bot = Client(
     "bot",
@@ -145,8 +147,8 @@ def start_web_server():
     port = int(os.environ.get("PORT", 8000)) # Default to 8000 for local testing
     logger.info(f"Starting web server on port {port}")
     uvicorn.run(app, host="0.0.0.0", port=port)
-
-
+# --- Block 3 End ---
+# --- Block 4 Start ---
 # --- Telegram Bot Handlers ---
 
 # Inline keyboard for start command
@@ -190,7 +192,7 @@ async def start_command(bot: Client, message: Message):
         "**ʜᴇʟʟᴏ👋**\n\n"
         "➠ **ɪ ᴀᴍ ᴛxᴛ ᴛᴏ ᴠɪᴅᴇᴏ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ.**\n"
         "➠ **ғᴏʀ ᴜsᴇ ᴍᴇ sᴇɴᴅ /tushar.\n"
-        "➠ **ғᴏʀ ɢᴜɪᴅᴇ sᴇɴᴅ /help."
+        "➠ **ғᴏʀ ɢᴜɪᴅᴇ sᴇ𝗻𝗱 /help."
     )
     await bot.send_photo(chat_id=message.chat.id, photo=random_image_url, caption=caption, reply_markup=keyboard)
 
@@ -253,7 +255,8 @@ async def cookies_handler(client: Client, m: Message):
     except Exception as e:
         logger.error(f"Error in cookies_handler: {e}")
         await m.reply_text(f"⚠️ An error occurred: {str(e)}")
-
+# --- Block 4 End ---
+# --- Block 5 Start ---
 # Define paths for uploaded file and processed file
 # IMPORTANT: CHANGE THIS TO A WRITABLE DIRECTORY IN YOUR DEPLOYMENT ENVIRONMENT
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "/tmp/uploads") # Using /tmp for Koyeb
@@ -401,8 +404,8 @@ async def ytplaylist_to_txt(client: Client, message: Message):
         os.remove(file_name)
     else:
         await message.reply_text("⚠️ **Unable to retrieve videos. Please check the URL.**")
-
-
+# --- Block 5 End ---
+# --- Block 6 Start ---
 # List users command
 @bot.on_message(filters.command("userlist") & filters.user(SUDO_USERS))
 async def list_users(client: Client, msg: Message):
@@ -461,14 +464,14 @@ async def upload(bot: Client, m: Message):
                 full_url = i
                 # If there's a title part, the URL is the second element
                 if len(parts) > 1:
-                    full_url = "://" + parts[1] # Reconstruct full URL with protocol
+                    full_url = parts[0] + "://" + parts[1] # Reconstruct full URL with protocol
                 links.append(full_url) # Append the full URL or line
 
                 if ".pdf" in full_url:
                     pdf_count += 1
-                elif full_url.endswith((".png", ".jpeg", ".jpg")):
+                elif full_url.endswith((".png", ".jpeg", ".jpg", ".gif", ".bmp", ".tiff")): # Added more image extensions
                     img_count += 1
-                elif ".zip" in full_url:
+                elif ".zip" in full_url or ".rar" in full_url or ".7z" in full_url: # Added more archive extensions
                     zip_count += 1
                 else: # This else covers video files if not pdf, img, or zip
                     video_count += 1
@@ -513,95 +516,7 @@ async def upload(bot: Client, m: Message):
             res = "854x480"
         elif raw_text2 == "720":
             res = "1280x720"
-elif  elif raw_text2 == "1080":
-            res = "1920x1080"
-        else:
-            res = "UN" # 'UN' likely means unknown/unsupported resolution
-    except Exception: # Catch any other potential errors
-        res = "UN"
-
-    await editable.edit("📛 𝗘𝗻𝘁𝗲𝗿 𝗬𝗼𝘂𝗿 𝗡𝗮𝗺𝗲 📛\n\n🐥 𝗦𝗲𝗻𝗱 `1` 𝗙𝗼𝗿 𝗨𝘀𝗲 𝗗𝗲𝗳𝗮𝘂𝗹𝘁 🐥")
-    input3: Message = await bot.listen(editable.chat.id)
-    raw_text3 = input3.text
-    await input3.delete(True)
-
-    if raw_text3 == '1':
-        CR = '[𝗧𝘂𝘀𝗵𝗮𝗿](https://t.me/Tushar0125)'
-    elif raw_text3: # This checks if raw_text3 is not empty
-        try:
-            # Use split with maxsplit=1 to handle only the first comma,
-            # in case the user's name or link contains commas.
-            text, link = raw_text3.split(',', 1)
-            CR = f'[{text.strip()}]({link.strip()})'
-        except ValueError:
-            # If split fails (i.e., no comma found), use the raw text as is.
-            CR = raw_text3.strip()
-    else:
-        # This 'else' handles cases where raw_text3 is empty or None.
-        CR = '[𝗧𝘂𝘀𝗵𝗮𝗿](https://t.me/Tushar0125)' # Default value if input is empty or just spaces
-
-    # --- Continue the /tushar command logic from here ---
-    # This part was missing in your original snippet, but based on the context,
-    # it's where the actual downloading and uploading would begin.
-    # You will need to implement the core logic here, calling functions from 'core' and 'utils'.
-    # For example:
-
-    await editable.edit(f"Starting download and upload process for {len(links)} links...\n"
-                        f"Batch Name: `{b_name}`\n"
-                        f"Resolution: `{res}`\n"
-                        f"Credit: {CR}\n"
-                        f"Starting from link: `{arg}`")
-
-    # Example placeholder for your actual download/upload loop
-    # This section is crucial and needs to be implemented based on your 'core' and 'utils' modules.
-    # The 'links' list now contains full URLs.
-    for i, full_url_string in enumerate(links):
-        if i + 1 >= arg:
-            try:
-                # Assuming 'helper.download_and_upload' is a function in your core.py
-                # that handles the actual downloading and uploading of each link.
-                # You need to pass the appropriate arguments to it.
-                # Example:
-                status_message = await editable.edit(f"Processing link {i+1}/{len(links)}: {full_url_string}")
-
-                # THIS IS A PLACEHOLDER. You need to call your actual download/upload logic here.
-                # e.g., await helper.download_file_and_upload_to_telegram(
-                #     bot, m, full_url_string, b_name, res, CR, status_message
-                # )
-                logger.info(f"Attempting to process URL: {full_url_string}")
-                await asyncio.sleep(5) # Simulate work for demonstration
-                await status_message.edit_text(f"✅ Finished link {i+1}/{len(links)}")
-
-            except Exception as e:
-                logger.error(f"Error processing link {full_url_string}: {e}")
-                await m.reply_text(f"⚠️ Error processing link {full_url_string}: {e}")
-                await asyncio.sleep(5) # Wait before continuing to next link
-        else:
-            logger.info(f"Skipping link {i+1} as it's before the starting argument.")
-
-
-    await m.reply_text("All links processed. Task completed! 🎉")
-    # Clean up the downloaded file if it wasn't removed inside the loop (depends on your helper functions)
-    # If files are temporarily saved in UPLOAD_FOLDER during download, ensure they are cleaned up.
-
-
-# --- Main execution block ---
-if __name__ == "__main__":
-    # Ensure UPLOAD_FOLDER exists at startup
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    logger.info(f"UPLOAD_FOLDER set to: {UPLOAD_FOLDER}")
-
-    # Start the FastAPI web server in a separate thread for health checks
-    web_server_thread = threading.Thread(target=start_web_server)
-    web_server_thread.daemon = True # Allow the main program to exit even if this thread is running
-    web_server_thread.start()
-    logger.info("Web server thread started.")
-
-    # Start the Pyrogram bot (this will block the main thread)
-    logger.info("Starting Telegram bot...")
-    bot.run() # This line should be at the very end to keep the bot alive
-# --- Block 6 End ---
-aw_text2 == "1080":
+        elif raw_text2 == "1080":
             res = "1920x1080"
         else:
             res = "UN" # 'UN' likely means unknown/unsupported resolution
