@@ -57,12 +57,12 @@ cookies_file_path = os.getenv("COOKIES_FILE_PATH", "youtube_cookies.txt")
 cpimg = "https://graph.org/file/5ed50675df0faf833efef-e102210eb72c1d5a17.jpg"
 
 # Define the owner's user ID
-OWNER_ID = 5840594311 # Replace with the actual owner's user ID
+OWNER_ID = 6221765779 # Replace with the actual owner's user ID
 
 # List of sudo users (initially empty or pre-populated)
-SUDO_USERS = [5840594311, 7856557198, 6303334633]
+SUDO_USERS = [6221765779, 7856557198, 6303334633]
 
-AUTH_CHANNEL = -1002572301679 # This usually implies a channel ID, ensure it's correct if used for auth
+AUTH_CHANNEL = -1002281845928 # This usually implies a channel ID, ensure it's correct if used for auth
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
